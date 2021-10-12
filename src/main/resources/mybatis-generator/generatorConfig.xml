@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+<generatorConfiguration>
+    <!-- 引用外部配置文件 -->
+    <!-- <properties resource="db.properties" />-->
+    <!--
+        在MBG工作的时候，需要额外加载的依赖包location属性指明加载jar/zip包的全路径 -->
+    <!--
+        <classPathEntry location="F:\.m2\repository\mysql\mysql-connector-java\5.1.38\mysql-connector-java-5.1.38.jar"/>
+     -->
+    <context id="MySQLTables" targetRuntime="MyBatis3" defaultModelType="flat">
+
+        <!-- 公共设置 -->
+        <commentGenerator>
+            <!-- 是否取消自动生成时的注释 -->
+            <property name="suppressAllComments" value="true"/>
+            <!-- 是否取消在注释中加上时间 -->
+            <property name="suppressDate" value="true"/>
+        </commentGenerator>
+
+        <!-- 链接数据库的配置  MySQL8之前的驱动com.mysql.jdbc.Driver，新的驱动com.mysql.cj.jdbc.Driver，并且要加时区-->
+        <jdbcConnection driverClass="com.mysql.cj.jdbc.Driver"
+                        connectionURL="jdbc:mysql://localhost:3306/demo?useUnicode=true&amp;characterEncoding=utf-8&amp;tinyInt1isBit=false&amp;allowMultiQueries=true"
+                        userId="root" password="root1234"/>
+
+        <!-- 关于生成实体类的设置 -->
+        <!-- targetPackage 生成代码的目标目录 -->
+        <!-- targetProject 目录所属位置 -->
+        <javaModelGenerator targetPackage="pub.newyear.mybatisgeneratorexample.entity" targetProject="src/main/java">
+            <!-- 在targetPackge的基础上根据schema再生成一层package 默认flase -->
+            <property name="enableSubPackages" value="true"/>
+            <!-- 是否在get方法中 对String类型的字段做空的判断 -->
+            <property name="trimStrings" value="true"/>
+            <!-- 是否生成一个包含所有字段的构造器 -->
+            <property name="constructorBased" value="false"/>
+            <!-- 是否创建一个不可变类-->
+            <property name="immutable" value="false"/>
+        </javaModelGenerator>
+
+        <!--关于生成映射文件的设置-->
+        <sqlMapGenerator targetPackage="mappings" targetProject="src/main/resources">
+            <!--同上-->
+            <property name="enableSubPackages" value="true"/>
+        </sqlMapGenerator>
+
+        <!--关于生成dao层的设置-->
+        <javaClientGenerator type="mapper" targetPackage="pub.newyear.mybatisgeneratorexample.dao" targetProject="src/main/java">
+            <!--同上-->
+            <property name="enableSubPackages" value="true"/>
+        </javaClientGenerator>
+
+        <!--需要生成的代码对应的表名 tableName 代表你的数据库表，domainObjectName 映射后的对象名称-->
+        <table tableName="t_person" schema="" domainObjectName="Person"
+               enableCountByExample="true" enableUpdateByExample="true"
+               enableDeleteByExample="true" enableSelectByExample="true"
+               selectByExampleQueryId="true">
+            <generatedKey column="id" sqlStatement="MySql"/>
+        </table>
+    </context>
+</generatorConfiguration>
